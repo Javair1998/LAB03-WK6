@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form</title>
+    <link rel="stylesheet" href="Al_CCS.css">
+</head>
+<body>
+    <h1>Login Form</h1>
+    <form id="loginForm">
+        <label for="username">Username:</label>
+        <input type="text" id="username" required><br>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" required><br>
+
+        <button type="submit" id="loginBtn">Login</button>
+        <button type="button" id="registerBtn" disabled>Register</button>
+    </form>
+
+    <p id="loginStatus"></p>
+
+    <script>
+        const defaultUsername = "user";
+        const defaultPassword = "password123";
+        let loginAttempts = [];
+
+        document.getElementById('username').addEventListener('focus', function() {
+            document.getElementById('registerBtn').disabled = false;
+        });
+
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if (username === defaultUsername && password === defaultPassword) {
+                document.getElementById('loginStatus').innerText = "Success!";
+                loginAttempts.push({ username, password, status: "Success" });
+            } else {
+                document.getElementById('loginStatus').innerText = "Fail!";
+                loginAttempts.push({ username, password, status: "Fail" });
+            }
+
+            
+            localStorage.setItem('loginAttempts', JSON.stringify(loginAttempts));
+
+            
+            window.location.href = "login_regis_form_data.html";
+        });
+    </script>
+</body>
+</html>
